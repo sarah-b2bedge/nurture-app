@@ -456,7 +456,7 @@ class _AiReviewScreenState extends State<AiReviewScreen> {
       title: 'Review before saving',
       subtitle:
           'Medicine requires confirmation of child, medicine, dose, and time.',
-      leading: BackButton(onPressed: widget.onBack),
+      leading: AppBackButton(onPressed: widget.onBack),
       children: [
         const ReviewCard(
           title: 'Feeding',
@@ -761,7 +761,7 @@ class SettingsScreen extends StatelessWidget {
       title: 'Family & Settings',
       subtitle:
           'Manage account, caregivers, notifications, baby profiles, and data.',
-      leading: BackButton(onPressed: onBack),
+      leading: AppBackButton(onPressed: onBack),
       children: [
         AppCard(
           color: AppColors.peach,
@@ -882,7 +882,7 @@ class SubscriptionScreen extends StatelessWidget {
       title: 'Subscription',
       subtitle:
           'Choose the right plan for your family. Basic logging stays available.',
-      leading: BackButton(onPressed: onBack),
+      leading: AppBackButton(onPressed: onBack),
       children: [
         const AppCard(
           color: AppColors.sage,
@@ -954,22 +954,25 @@ class ScreenScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: ListView(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (leading != null) ...[leading!, const SizedBox(width: 8)],
-              Expanded(
-                child: HeaderText(title: title, subtitle: subtitle),
-              ),
-              if (trailing != null) trailing!,
-            ],
-          ),
-          const SizedBox(height: 18),
-          ...children.expand((child) => [child, const SizedBox(height: 14)]),
-        ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (leading != null) ...[leading!, const SizedBox(width: 8)],
+                Expanded(
+                  child: HeaderText(title: title, subtitle: subtitle),
+                ),
+                ?trailing,
+              ],
+            ),
+            const SizedBox(height: 18),
+            ...children.expand((child) => [child, const SizedBox(height: 14)]),
+          ],
+        ),
       ),
     );
   }
@@ -1038,7 +1041,7 @@ class FormScreen extends StatelessWidget {
     return ScreenScaffold(
       title: title,
       subtitle: subtitle,
-      leading: BackButton(onPressed: onBack),
+      leading: AppBackButton(onPressed: onBack),
       children: [
         AppCard(
           child: Column(
@@ -1048,8 +1051,22 @@ class FormScreen extends StatelessWidget {
             ],
           ),
         ),
-        if (footer != null) footer!,
+        ?footer,
       ],
+    );
+  }
+}
+
+class AppBackButton extends StatelessWidget {
+  const AppBackButton({required this.onPressed, super.key});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton.filledTonal(
+      onPressed: onPressed,
+      icon: const Icon(Icons.arrow_back_rounded),
     );
   }
 }
@@ -1216,7 +1233,7 @@ class AppField extends StatelessWidget {
         const SizedBox(height: 6),
         Container(
           width: double.infinity,
-          minHeight: 52,
+          constraints: const BoxConstraints(minHeight: 52),
           alignment: Alignment.centerLeft,
           padding: const EdgeInsets.symmetric(horizontal: 14),
           decoration: BoxDecoration(
@@ -1384,7 +1401,7 @@ class StatusGrid extends StatelessWidget {
     ];
     return GridView.count(
       crossAxisCount: 2,
-      childAspectRatio: 1.55,
+      childAspectRatio: 1.25,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       mainAxisSpacing: 10,

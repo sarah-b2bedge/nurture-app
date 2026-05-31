@@ -54,13 +54,17 @@ Bottom navigation is persistent after onboarding:
    - stage-based checklists
    - essential preparation categories
 
-Family & Settings is available from the Home header profile/settings button rather than the bottom nav to keep the bottom nav focused on daily care.
+Account entry is shown before onboarding when needed. Family & Settings is available from the Home header profile/settings button rather than the bottom nav to keep the bottom nav focused on daily care. Profile, password, subscription, and payment management live inside Family & Settings.
 
 ## User flow map
 
 ```mermaid
 flowchart TD
-  A[Open app] --> B{Onboarded?}
+  A[Open app] --> AUTH{Signed in?}
+  AUTH -- No --> AUTH1[Sign up or login]
+  AUTH1 --> AUTH2[Email verification / password reset if needed]
+  AUTH2 --> B{Onboarded?}
+  AUTH -- Yes --> B{Onboarded?}
   B -- No --> C[Welcome]
   C --> D[Create baby profile]
   D --> E{Add another child?}
@@ -115,7 +119,109 @@ flowchart TD
   AL --> AN[Notifications]
   AL --> AO[Baby profiles]
   AL --> AP[Privacy and data export]
+  AL --> AQ[Profile]
+  AL --> AR[Change password]
+  AL --> AS[Subscription]
+  AS --> AT[Payment method]
+  AT --> AU[Checkout confirmation]
 ```
+
+
+## User management flow
+
+Account features should feel secure without making the parent do extra work in the middle of baby-care logging.
+
+### Sign up
+
+Entry points:
+- Welcome screen primary CTA for new users.
+- "Create account" link from login.
+- Invite acceptance flow for caregivers.
+
+Essential fields:
+- Full name
+- Email
+- Password
+- Confirm password
+- Optional phone number for caregiver invites and reminders
+- Terms and privacy acknowledgement
+
+Recommended flow:
+
+```
+┌──────────────────────────────┐
+│ Create your account          │
+│ Name                         │
+│ Email                        │
+│ Password                     │
+│ Confirm password             │
+│ [Create account]             │
+│ Already have an account?     │
+└──────────────────────────────┘
+```
+
+Behavior:
+- After sign up, continue to create baby profile.
+- If the user arrived from an invite, preserve the invite context and role.
+- Use inline validation for weak passwords, invalid email, and mismatched confirmation.
+- Keep password requirements visible but concise.
+
+### Login
+
+Essential fields:
+- Email
+- Password
+
+Actions:
+- Login
+- Forgot password
+- Create account
+
+Behavior:
+- Return authenticated users to Home.
+- If onboarding is incomplete, return them to the next onboarding step.
+- Offer biometric/passkey support as a future enhancement, not as the only path.
+
+### Profile
+
+Profile is available from Family & Settings.
+
+Fields:
+- Name
+- Email
+- Phone
+- Profile photo/avatar
+- Household role
+- Time zone
+- Preferred units: ml/oz and F/C
+
+Actions:
+- Save changes
+- Change password
+- Manage subscription
+- Export data
+- Delete account placeholder
+
+### Change password
+
+Fields:
+- Current password
+- New password
+- Confirm new password
+
+Behavior:
+- Show password strength and requirements.
+- Confirm success without logging the user out by default.
+- For social/login-link accounts, replace this page with "Manage sign-in method."
+
+### Account security states
+
+- **Sign up success:** "Account created. Let's set up your baby profile."
+- **Login error:** "Email or password did not match. Try again or reset your password."
+- **Password reset sent:** "Check your email for a reset link."
+- **Changed password:** "Password updated."
+- **Session expired:** "Please log in again to keep baby data private."
+- **Invite accepted:** "You're joining Emma's care team as a grandparent."
 
 ## Onboarding flow
 
@@ -551,6 +657,11 @@ Checklist behavior:
 ## Family & Settings
 
 Sections:
+- Account
+  - Profile
+  - Change password
+  - Subscription and payment
+  - Sign out
 - Caregivers
   - Add caregiver
   - Assign role: parent, grandparent, helper, view-only
@@ -572,10 +683,95 @@ Sections:
   - Privacy policy placeholder
 
 Role guidance:
-- Parent: full access, settings, invites.
+- Parent: full access, settings, invites, subscription, and billing.
 - Grandparent: log and view care, limited settings.
 - Helper: log assigned care, view recent timeline.
 - View-only: view timeline and reminders, no editing.
+
+## Subscription and payment
+
+The subscription page should be clear, non-pushy, and easy to understand while a parent is busy.
+
+### Subscription page
+
+Content:
+- Current plan and renewal date, if subscribed.
+- Plan cards: Free, Family, Premium.
+- Feature comparison with short parent-centered benefits.
+- Trial or introductory offer, if available.
+- Manage payment method.
+- Cancel subscription entry point.
+
+Suggested plan framing:
+
+| Plan | Best for | Example features |
+| --- | --- | --- |
+| Free | One caregiver getting started | Basic logging, timeline, one baby profile |
+| Family | Shared care team | Multiple caregivers, reminders, supplies, data export |
+| Premium | Deeper support | AI summaries, advanced trends, priority support |
+
+Mobile layout:
+
+```
+┌──────────────────────────────┐
+│ Subscription                 │
+│ Current plan: Family         │
+│ Renews Jun 30                │
+├──────────────────────────────┤
+│ Free                         │
+│ Basic baby care logging      │
+│ [Current]                    │
+├──────────────────────────────┤
+│ Family                       │
+│ Shared caregivers + reminders│
+│ [Choose Family]              │
+├──────────────────────────────┤
+│ Premium                      │
+│ AI summaries + trends        │
+│ [Choose Premium]             │
+└──────────────────────────────┘
+```
+
+### Payment page
+
+Essential fields:
+- Selected plan
+- Billing period: monthly or yearly
+- Payment method: card, Apple Pay, Google Pay, or platform-supported wallet
+- Cardholder name
+- Card number
+- Expiration date
+- Security code
+- Billing ZIP/postal code
+- Promo code, optional
+
+Actions:
+- Review purchase
+- Start trial / subscribe
+- Update payment method
+- Cancel
+
+Required confirmation:
+- Show plan, price, billing cadence, renewal date, and cancellation note before purchase.
+- Require explicit tap on "Subscribe" or "Start trial".
+- Never hide recurring billing terms below the primary action.
+
+### Payment states
+
+- **Payment success:** "You're subscribed to Family. Shared reminders are now available."
+- **Payment failed:** "Payment did not go through. Check the card or try another method."
+- **Trial started:** "Your trial started. We'll remind you before billing begins."
+- **Subscription canceled:** "Your plan will stay active until the end of the billing period."
+- **Past due:** "Update payment to keep caregiver sharing and reminders active."
+- **Promo applied:** "Promo code applied to this billing period."
+
+### Billing safety and trust
+
+- Keep baby-care logging available if billing fails; restrict premium features only.
+- Show who can manage billing. Default: parent role only.
+- Send receipts by email.
+- Make cancellation discoverable from the subscription page.
+- Do not ask for payment during medicine logging or other safety-critical flows.
 
 ## Design system suggestions
 
@@ -657,6 +853,14 @@ Suggested chips: diapers, formula, wipes.
 "You're the only caregiver right now."
 CTA: "Invite caregiver"
 
+### Subscription, no plan selected
+"Choose a plan when you're ready. Basic tracking is still available."
+CTA: "Compare plans"
+
+### Payment method, none saved
+"Add a payment method to start a paid plan."
+CTA: "Add payment method"
+
 ## Error states
 
 ### Voice unavailable
@@ -693,6 +897,24 @@ Actions:
 - "Try again"
 - "Copy details"
 
+### Authentication error
+"Email or password did not match. Try again or reset your password."
+Actions:
+- "Try again"
+- "Reset password"
+
+### Password validation
+Inline messages:
+- "Use at least 8 characters."
+- "Passwords do not match."
+- "Current password is required."
+
+### Payment failed
+"Payment did not go through. Check the card or try another method."
+Actions:
+- "Try again"
+- "Use another payment method"
+
 ## Confirmation states
 
 ### AI parsed logs
@@ -717,6 +939,27 @@ Actions:
 
 ### Supply reorder reminder
 "Reminder set for diapers at 20 remaining."
+
+### Account created
+"Account created. Let's set up your baby profile."
+Actions:
+- "Continue"
+
+### Password changed
+"Password updated."
+Actions:
+- "Back to profile"
+
+### Subscription purchased
+"You're subscribed to Family. Shared reminders are now available."
+Actions:
+- "Done"
+- "Invite caregiver"
+
+### Payment method updated
+"Payment method updated."
+Actions:
+- "Back to subscription"
 
 ## High-fidelity UI direction
 
@@ -918,6 +1161,9 @@ Actions:
 - Provide export placeholders for pediatrician visits.
 - Do not expose sensitive baby data on lock-screen notifications; use generic notification copy by default.
 - Keep audit history for edited/deleted medicine logs where legally appropriate.
+- Require re-authentication for sensitive account changes such as password changes, exports, and account deletion.
+- Restrict subscription and billing management to parent roles by default.
+- Do not interrupt medicine or emergency-adjacent logging with subscription prompts.
 
 ## Success criteria
 
@@ -926,3 +1172,6 @@ Actions:
 - A medicine entry cannot be saved without confirming baby, medicine name, dose, and time.
 - The Home screen provides useful status at a glance without opening the timeline.
 - Empty states guide users toward the next useful action.
+- A new caregiver can sign up or log in, complete profile basics, and reach onboarding or Home without losing invite context.
+- A parent can update profile information and change password with clear validation and success states.
+- A parent can compare plans, enter payment details, review recurring billing terms, and confirm subscription purchase.

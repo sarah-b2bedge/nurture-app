@@ -8,12 +8,14 @@ Mobile-first UX deliverables for **Nurture Assistant**, an AI assistant that hel
   - User flow map
   - Mobile wireframes
   - Navigation structure
+  - User management: sign up, login, profile, and change password
+  - Subscription and payment page
   - AI logging and medicine confirmation flow
   - Quick Add forms
   - Empty, error, and confirmation states
   - Design system and high-fidelity UI direction
 - [Static mobile prototype](prototype/index.html)
-  - Self-contained HTML/CSS prototype with the primary mobile screens and states.
+  - Self-contained HTML/CSS prototype with the primary mobile screens and states, including account and subscription/payment flows.
 
 ## Viewing the prototype
 

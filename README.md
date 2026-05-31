@@ -4,6 +4,9 @@ Mobile-first UX deliverables for **Nurture Assistant**, an AI assistant that hel
 
 ## Deliverables
 
+- Flutter web app
+  - Mobile-first implementation for web using Flutter.
+  - Includes account entry, create account, log in, onboarding, dashboard, AI review, quick add, timeline, medicine, supplies, guide, settings, profile, change password, and subscription/payment screens.
 - [UX specification](docs/nurture-assistant-ux.md)
   - User flow map
   - Mobile wireframes
@@ -17,6 +20,19 @@ Mobile-first UX deliverables for **Nurture Assistant**, an AI assistant that hel
 - [Static mobile prototype](prototype/index.html)
   - Self-contained HTML/CSS prototype with the primary mobile screens and states, including account and subscription/payment flows.
 
-## Viewing the prototype
+## Running the Flutter web app
+
+```sh
+flutter pub get
+flutter run -d chrome
+```
+
+For a static web build:
+
+```sh
+flutter build web
+```
+
+## Viewing the original static prototype
 
 Open `prototype/index.html` in a browser. No build step or dependencies are required.

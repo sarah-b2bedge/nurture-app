@@ -1,0 +1,1359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Nurture Assistant UX Prototype</title>
+    <style>
+      :root {
+        --cream: #fff8f0;
+        --cream-strong: #ffeedf;
+        --peach: #ffe5d4;
+        --sage: #ddebdd;
+        --sky: #ddebff;
+        --lavender: #ece4ff;
+        --amber: #f7d590;
+        --coral: #e86f61;
+        --mint: #cfe9df;
+        --ink: #25313b;
+        --muted: #65717a;
+        --line: #eadfda;
+        --white: #ffffff;
+        --shadow: 0 20px 60px rgba(80, 63, 50, 0.14);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at top left, rgba(255, 229, 212, 0.9), transparent 34rem),
+          radial-gradient(circle at top right, rgba(221, 235, 221, 0.95), transparent 28rem),
+          var(--cream);
+        color: var(--ink);
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+      }
+
+      main {
+        margin: 0 auto;
+        max-width: 1280px;
+        padding: 40px 20px 80px;
+      }
+
+      .hero {
+        display: grid;
+        gap: 18px;
+        margin: 0 auto 34px;
+        max-width: 920px;
+        text-align: center;
+      }
+
+      .eyebrow {
+        color: var(--coral);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(2rem, 5vw, 4.5rem);
+        letter-spacing: -0.05em;
+        line-height: 0.95;
+      }
+
+      .hero p {
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.55;
+      }
+
+      .system-strip {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        margin: 0 auto 42px;
+        max-width: 1040px;
+      }
+
+      .system-card {
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid rgba(234, 223, 218, 0.9);
+        border-radius: 24px;
+        padding: 18px;
+      }
+
+      .system-card strong {
+        display: block;
+        font-size: 0.95rem;
+        margin-bottom: 6px;
+      }
+
+      .system-card span {
+        color: var(--muted);
+        display: block;
+        font-size: 0.88rem;
+        line-height: 1.45;
+      }
+
+      .section-title {
+        margin: 42px auto 18px;
+        max-width: 1040px;
+      }
+
+      .section-title h2 {
+        font-size: clamp(1.6rem, 3vw, 2.5rem);
+        letter-spacing: -0.04em;
+      }
+
+      .section-title p {
+        color: var(--muted);
+        line-height: 1.5;
+        margin-top: 8px;
+        max-width: 760px;
+      }
+
+      .screens {
+        display: grid;
+        gap: 28px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+
+      .phone-wrap {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .caption {
+        color: var(--muted);
+        font-size: 0.9rem;
+        font-weight: 700;
+      }
+
+      .phone {
+        background: #fefcf9;
+        border: 10px solid #2e3136;
+        border-radius: 44px;
+        box-shadow: var(--shadow);
+        height: 740px;
+        max-width: 370px;
+        overflow: hidden;
+        position: relative;
+        width: min(100%, 370px);
+      }
+
+      .screen {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        height: 100%;
+        overflow: hidden;
+        padding: 28px 18px 92px;
+        position: relative;
+      }
+
+      .screen.scroll {
+        overflow-y: auto;
+      }
+
+      .screen.centered {
+        justify-content: center;
+        padding-bottom: 28px;
+        text-align: center;
+      }
+
+      .status-bar {
+        align-items: center;
+        display: flex;
+        font-size: 0.8rem;
+        font-weight: 800;
+        justify-content: space-between;
+        margin: -12px 4px 4px;
+      }
+
+      .top-row,
+      .between {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .avatar {
+        align-items: center;
+        background: var(--peach);
+        border-radius: 999px;
+        display: inline-flex;
+        font-size: 1.1rem;
+        font-weight: 800;
+        height: 42px;
+        justify-content: center;
+        width: 42px;
+      }
+
+      .selector {
+        align-items: center;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        display: inline-flex;
+        font-weight: 800;
+        gap: 8px;
+        padding: 7px 12px 7px 8px;
+      }
+
+      .icon-button {
+        align-items: center;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        display: inline-flex;
+        font-weight: 900;
+        height: 42px;
+        justify-content: center;
+        width: 42px;
+      }
+
+      .title {
+        font-size: 1.8rem;
+        letter-spacing: -0.05em;
+        line-height: 1.05;
+      }
+
+      .subtitle {
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.45;
+      }
+
+      .card {
+        background: var(--white);
+        border: 1px solid rgba(234, 223, 218, 0.85);
+        border-radius: 26px;
+        box-shadow: 0 8px 24px rgba(80, 63, 50, 0.08);
+        padding: 16px;
+      }
+
+      .soft-card {
+        background: linear-gradient(145deg, var(--peach), #fff1e8);
+      }
+
+      .assistant-card {
+        background: linear-gradient(145deg, var(--sky), #f6f9ff 62%);
+        border-color: #cadcf9;
+        min-height: 136px;
+      }
+
+      .medicine-card {
+        background: linear-gradient(145deg, #fff4d8, #fffdf7);
+        border-color: #efd18d;
+      }
+
+      .success-card {
+        background: linear-gradient(145deg, var(--sage), #f5fbf5);
+        border-color: #c9dfc9;
+      }
+
+      .danger-card {
+        background: linear-gradient(145deg, #ffe2dc, #fffaf8);
+        border-color: #efb3aa;
+      }
+
+      .card h3 {
+        font-size: 1rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+
+      .large-input {
+        align-items: center;
+        display: flex;
+        gap: 12px;
+        margin-top: 12px;
+      }
+
+      .mic {
+        align-items: center;
+        background: var(--ink);
+        border-radius: 18px;
+        color: var(--white);
+        display: inline-flex;
+        font-size: 1.2rem;
+        height: 54px;
+        justify-content: center;
+        width: 54px;
+      }
+
+      .input-copy {
+        color: var(--muted);
+        flex: 1;
+        font-size: 0.96rem;
+        line-height: 1.35;
+        text-align: left;
+      }
+
+      .quick-grid {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .quick {
+        align-items: center;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        font-size: 0.78rem;
+        font-weight: 800;
+        gap: 6px;
+        min-height: 72px;
+        justify-content: center;
+        padding: 8px;
+      }
+
+      .quick span {
+        font-size: 1.35rem;
+      }
+
+      .stats-grid {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat {
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 12px;
+      }
+
+      .stat small {
+        color: var(--muted);
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 800;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1rem;
+      }
+
+      .chip-row {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .chip {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--muted);
+        flex: 0 0 auto;
+        font-size: 0.8rem;
+        font-weight: 800;
+        padding: 8px 12px;
+      }
+
+      .chip.active {
+        background: var(--ink);
+        border-color: var(--ink);
+        color: var(--white);
+      }
+
+      .timeline {
+        display: grid;
+        gap: 10px;
+      }
+
+      .timeline-item {
+        align-items: flex-start;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 54px 1fr;
+      }
+
+      .time {
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 900;
+        padding-top: 12px;
+      }
+
+      .log {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 12px;
+      }
+
+      .log strong {
+        display: block;
+        font-size: 0.92rem;
+      }
+
+      .log span {
+        color: var(--muted);
+        display: block;
+        font-size: 0.8rem;
+        margin-top: 2px;
+      }
+
+      .button {
+        align-items: center;
+        background: var(--ink);
+        border: 0;
+        border-radius: 18px;
+        color: var(--white);
+        display: inline-flex;
+        font-size: 1rem;
+        font-weight: 900;
+        justify-content: center;
+        min-height: 54px;
+        padding: 0 18px;
+        text-decoration: none;
+        width: 100%;
+      }
+
+      .button.secondary {
+        background: var(--white);
+        border: 1px solid var(--line);
+        color: var(--ink);
+      }
+
+      .button.warning {
+        background: #7b4e00;
+      }
+
+      .button-row {
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .field {
+        display: grid;
+        gap: 6px;
+        margin-top: 10px;
+      }
+
+      .field label {
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .fake-input {
+        align-items: center;
+        background: #fffaf6;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        display: flex;
+        font-weight: 800;
+        justify-content: space-between;
+        min-height: 48px;
+        padding: 0 14px;
+      }
+
+      .check-row {
+        align-items: flex-start;
+        display: flex;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .checkbox {
+        background: var(--white);
+        border: 2px solid var(--ink);
+        border-radius: 8px;
+        flex: 0 0 auto;
+        height: 24px;
+        width: 24px;
+      }
+
+      .checkbox.checked {
+        align-items: center;
+        background: var(--ink);
+        color: var(--white);
+        display: inline-flex;
+        font-size: 0.8rem;
+        justify-content: center;
+      }
+
+      .bottom-nav {
+        align-items: center;
+        background: rgba(255, 255, 255, 0.94);
+        border-top: 1px solid var(--line);
+        bottom: 0;
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        left: 0;
+        padding: 10px 8px 14px;
+        position: absolute;
+        right: 0;
+      }
+
+      .nav-item {
+        align-items: center;
+        color: var(--muted);
+        display: flex;
+        flex-direction: column;
+        font-size: 0.68rem;
+        font-weight: 900;
+        gap: 3px;
+      }
+
+      .nav-item b {
+        font-size: 1.18rem;
+      }
+
+      .nav-item.active {
+        color: var(--ink);
+      }
+
+      .supply {
+        align-items: center;
+        display: grid;
+        gap: 12px;
+        grid-template-columns: 52px 1fr;
+      }
+
+      .supply-icon {
+        align-items: center;
+        background: var(--peach);
+        border-radius: 18px;
+        display: flex;
+        font-size: 1.4rem;
+        height: 52px;
+        justify-content: center;
+        width: 52px;
+      }
+
+      .progress {
+        background: #f0e7e0;
+        border-radius: 999px;
+        height: 8px;
+        margin-top: 8px;
+        overflow: hidden;
+      }
+
+      .progress > span {
+        background: var(--coral);
+        border-radius: inherit;
+        display: block;
+        height: 100%;
+      }
+
+      .guide-list {
+        display: grid;
+        gap: 9px;
+      }
+
+      .guide-item {
+        align-items: center;
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        display: flex;
+        gap: 10px;
+        padding: 12px;
+      }
+
+      .mini-note {
+        background: rgba(255, 255, 255, 0.68);
+        border: 1px dashed var(--line);
+        border-radius: 18px;
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.4;
+        padding: 12px;
+      }
+
+      .swatches {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        margin: 0 auto;
+        max-width: 1040px;
+      }
+
+      .swatch {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        overflow: hidden;
+      }
+
+      .swatch-color {
+        height: 62px;
+      }
+
+      .swatch span {
+        display: block;
+        font-size: 0.82rem;
+        font-weight: 800;
+        padding: 10px;
+      }
+
+      .flow-map {
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid var(--line);
+        border-radius: 30px;
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        margin: 0 auto;
+        max-width: 1040px;
+        padding: 18px;
+      }
+
+      .flow-step {
+        background: var(--white);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 850;
+        line-height: 1.25;
+        padding: 14px;
+        position: relative;
+      }
+
+      .flow-step small {
+        color: var(--muted);
+        display: block;
+        font-size: 0.74rem;
+        font-weight: 700;
+        margin-top: 6px;
+      }
+
+      @media (max-width: 720px) {
+        main {
+          padding-inline: 14px;
+        }
+
+        .phone {
+          height: 720px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <div class="eyebrow">Nurture Assistant</div>
+        <h1>Baby care tracking that feels like talking.</h1>
+        <p>
+          A mobile-first UX flow for new parents who need quick, safe logging with voice-style input,
+          large one-handed controls, editable AI confirmations, and medicine safeguards.
+        </p>
+      </section>
+
+      <section class="system-strip" aria-label="Design principles">
+        <div class="system-card">
+          <strong>Fast</strong>
+          <span>One primary assistant input plus quick add buttons for repeat actions.</span>
+        </div>
+        <div class="system-card">
+          <strong>Safe</strong>
+          <span>Medicine logs require confirmation of child, medicine, dose, and time.</span>
+        </div>
+        <div class="system-card">
+          <strong>Simple</strong>
+          <span>Rounded cards, short copy, and defaults that reduce typing.</span>
+        </div>
+        <div class="system-card">
+          <strong>Supportive</strong>
+          <span>Warm colors and reassuring states built for tired caregivers.</span>
+        </div>
+      </section>
+
+      <section class="section-title">
+        <h2>User flow map</h2>
+        <p>
+          Parents land on Home after onboarding, log by speaking or tapping, review parsed records,
+          and return to dashboards that summarize care, medicine, supplies, and guidance.
+        </p>
+      </section>
+      <section class="flow-map" aria-label="User flow map">
+        <div class="flow-step">Welcome<small>Create baby profile and invite caregivers.</small></div>
+        <div class="flow-step">Permissions<small>Mic, camera, and notifications after value prompts.</small></div>
+        <div class="flow-step">Home<small>Baby selector, assistant input, quick add, reminders.</small></div>
+        <div class="flow-step">AI logging<small>Listen or type, parse, review editable cards.</small></div>
+        <div class="flow-step">Medicine gate<small>Require explicit safety confirmation before saving.</small></div>
+        <div class="flow-step">Timeline<small>Filter, edit, delete, and view daily summaries.</small></div>
+        <div class="flow-step">Care hubs<small>Medicine, Supplies, Guide, Family & Settings.</small></div>
+      </section>
+
+      <section class="section-title">
+        <h2>Onboarding and core dashboard</h2>
+        <p>
+          Onboarding asks only for what is needed to personalize logging. The dashboard keeps the
+          assistant action, quick add controls, and status cards within thumb reach.
+        </p>
+      </section>
+      <section class="screens">
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen centered">
+              <div class="status-bar"><span>8:00</span><span>●●●</span></div>
+              <div style="font-size: 4rem">🌙</div>
+              <h2 class="title">Baby care tracking that feels like talking.</h2>
+              <p class="subtitle">
+                Log feeds, diapers, sleep, medicine, and supplies in seconds with a helpful assistant.
+              </p>
+              <div class="card soft-card">
+                <h3>Create baby profile</h3>
+                <div class="field">
+                  <label>Baby name</label>
+                  <div class="fake-input">Emma</div>
+                </div>
+                <div class="field">
+                  <label>Birthday or due date</label>
+                  <div class="fake-input">May 10, 2026</div>
+                </div>
+                <div class="chip-row" style="margin-top: 12px">
+                  <span class="chip active">Formula</span>
+                  <span class="chip">Breast</span>
+                  <span class="chip">Mixed</span>
+                </div>
+              </div>
+              <a class="button" href="#home">Continue</a>
+              <a class="button secondary" href="#invite">I already have an invite</a>
+            </div>
+          </div>
+          <div class="caption">Welcome + create baby profile</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen">
+              <div class="status-bar"><span>8:01</span><span>●●●</span></div>
+              <h2 class="title">Set up helpers</h2>
+              <p class="subtitle">Add another child, invite trusted caregivers, and turn on helpful permissions.</p>
+              <div class="card">
+                <h3>Add another child?</h3>
+                <p class="subtitle">Track siblings separately so each log has the right child.</p>
+                <div class="button-row" style="margin-top: 12px">
+                  <span class="button secondary">Not now</span>
+                  <span class="button">Add child</span>
+                </div>
+              </div>
+              <div class="card">
+                <h3>Invite caregiver</h3>
+                <div class="field">
+                  <label>Email or phone</label>
+                  <div class="fake-input">taylor@example.com</div>
+                </div>
+                <div class="field">
+                  <label>Role</label>
+                  <div class="fake-input">Grandparent <span>⌄</span></div>
+                </div>
+              </div>
+              <div class="card assistant-card">
+                <h3>Permissions</h3>
+                <div class="guide-list">
+                  <div class="guide-item"><span>🎙️</span><strong>Microphone for hands-free logs</strong></div>
+                  <div class="guide-item"><span>📷</span><strong>Camera for supply labels and photos</strong></div>
+                  <div class="guide-item"><span>🔔</span><strong>Notifications for reminders</strong></div>
+                </div>
+              </div>
+              <a class="button" href="#home">Finish setup</a>
+            </div>
+          </div>
+          <div class="caption">Add child, invite caregiver, permission prompts</div>
+        </div>
+
+        <div class="phone-wrap" id="home">
+          <div class="phone">
+            <div class="screen scroll">
+              <div class="status-bar"><span>8:02</span><span>●●●</span></div>
+              <div class="top-row">
+                <div class="selector"><span class="avatar">E</span> Emma ▾</div>
+                <div class="icon-button" aria-label="Family and settings">⚙</div>
+              </div>
+              <div>
+                <h2 class="title">Good evening, Maya</h2>
+                <p class="subtitle">Last updated by Dad at 7:52pm.</p>
+              </div>
+              <div class="card assistant-card">
+                <div class="between">
+                  <h3>Tell me what happened</h3>
+                  <span class="chip active">AI</span>
+                </div>
+                <div class="large-input">
+                  <div class="mic">🎙️</div>
+                  <div class="input-copy">Tap to type or hold the mic. Try "Emma drank 90ml formula at 8pm."</div>
+                </div>
+              </div>
+              <div>
+                <div class="between" style="margin-bottom: 10px">
+                  <h3>Quick Add</h3>
+                  <span class="subtitle">One tap</span>
+                </div>
+                <div class="quick-grid">
+                  <div class="quick"><span>🍼</span>Feeding</div>
+                  <div class="quick"><span>🧷</span>Diaper</div>
+                  <div class="quick"><span>🌙</span>Sleep</div>
+                  <div class="quick"><span>💊</span>Medicine</div>
+                  <div class="quick"><span>🌡️</span>Temp</div>
+                  <div class="quick"><span>📝</span>Note</div>
+                </div>
+              </div>
+              <div class="stats-grid">
+                <div class="stat"><small>Last fed</small><strong>8:00pm</strong><span class="subtitle">90ml formula</span></div>
+                <div class="stat"><small>Last diaper</small><strong>7:40pm</strong><span class="subtitle">Wet</span></div>
+                <div class="stat"><small>Last sleep</small><strong>45m nap</strong><span class="subtitle">Ended 6:55pm</span></div>
+                <div class="stat"><small>Last medicine</small><strong>8:00pm</strong><span class="subtitle">2.5ml</span></div>
+              </div>
+              <div class="card medicine-card">
+                <h3>Upcoming reminder</h3>
+                <p class="subtitle">Fever medicine check · 12:00am for Emma</p>
+              </div>
+              <div class="card">
+                <div class="between">
+                  <h3>Today</h3>
+                  <span class="subtitle">View all</span>
+                </div>
+                <div class="timeline">
+                  <div class="timeline-item">
+                    <div class="time">8:00p</div>
+                    <div class="log"><strong>Formula + fever medicine</strong><span>Emma · Maya</span></div>
+                  </div>
+                  <div class="timeline-item">
+                    <div class="time">7:40p</div>
+                    <div class="log"><strong>Wet diaper</strong><span>Emma · Dad</span></div>
+                  </div>
+                </div>
+              </div>
+              <nav class="bottom-nav" aria-label="Bottom navigation">
+                <div class="nav-item active"><b>⌂</b>Home</div>
+                <div class="nav-item"><b>◷</b>Timeline</div>
+                <div class="nav-item"><b>✚</b>Medicine</div>
+                <div class="nav-item"><b>▦</b>Supplies</div>
+                <div class="nav-item"><b>☑</b>Guide</div>
+              </nav>
+            </div>
+          </div>
+          <div class="caption">Home dashboard</div>
+        </div>
+      </section>
+
+      <section class="section-title">
+        <h2>AI logging flow</h2>
+        <p>
+          The assistant can listen or accept typed input. It parses possible logs, then presents editable
+          confirmation cards. Medicine entries stay blocked until the parent confirms details.
+        </p>
+      </section>
+      <section class="screens">
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen centered">
+              <div class="status-bar"><span>8:03</span><span>●●●</span></div>
+              <div class="card assistant-card" style="text-align: left">
+                <div class="between">
+                  <h3>Listening...</h3>
+                  <span class="chip active">Live</span>
+                </div>
+                <p class="subtitle" style="font-size: 1.15rem; margin-top: 18px">
+                  "Emma drank 90ml formula at 8pm and I gave 2.5ml fever medicine."
+                </p>
+                <div class="large-input">
+                  <div class="mic">●</div>
+                  <div class="input-copy">Recording. You can tap the text to correct it before review.</div>
+                </div>
+              </div>
+              <div class="button-row">
+                <span class="button secondary">Cancel</span>
+                <span class="button">Review</span>
+              </div>
+            </div>
+          </div>
+          <div class="caption">Listening / typing state</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen centered">
+              <div class="status-bar"><span>8:03</span><span>●●●</span></div>
+              <div class="card assistant-card">
+                <div style="font-size: 3rem">✨</div>
+                <h2 class="title">Understanding your update...</h2>
+                <p class="subtitle">Found possible feeding and medicine logs. Nothing is saved yet.</p>
+              </div>
+              <div class="mini-note">AI parsing should be fast, transparent, and reversible.</div>
+            </div>
+          </div>
+          <div class="caption">AI parsing state</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen scroll">
+              <div class="status-bar"><span>8:04</span><span>●●●</span></div>
+              <h2 class="title">Review before saving</h2>
+              <p class="subtitle">Check each card. Medicine needs confirmation before saving.</p>
+              <div class="card">
+                <div class="between">
+                  <h3>🍼 Feeding</h3>
+                  <span class="chip">Edit</span>
+                </div>
+                <div class="stats-grid">
+                  <div class="stat"><small>Baby</small><strong>Emma</strong></div>
+                  <div class="stat"><small>Type</small><strong>Formula</strong></div>
+                  <div class="stat"><small>Amount</small><strong>90ml</strong></div>
+                  <div class="stat"><small>Time</small><strong>8:00pm</strong></div>
+                </div>
+              </div>
+              <div class="card medicine-card">
+                <div class="between">
+                  <h3>💊 Medicine</h3>
+                  <span class="chip">Edit</span>
+                </div>
+                <div class="stats-grid">
+                  <div class="stat"><small>Baby</small><strong>Emma</strong></div>
+                  <div class="stat"><small>Name</small><strong>Fever medicine</strong></div>
+                  <div class="stat"><small>Dose</small><strong>2.5ml</strong></div>
+                  <div class="stat"><small>Time</small><strong>8:00pm</strong></div>
+                </div>
+              </div>
+              <div class="card medicine-card">
+                <h3>⚠ Confirm medicine details</h3>
+                <p class="subtitle">Check the child, medicine name, dose, and time before saving.</p>
+                <div class="check-row">
+                  <span class="checkbox"></span>
+                  <p class="subtitle"><strong>I checked this medicine dose for Emma.</strong></p>
+                </div>
+              </div>
+              <span class="button warning">Save 2 logs</span>
+            </div>
+          </div>
+          <div class="caption">Editable confirmation cards + medicine confirmation</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen centered">
+              <div class="status-bar"><span>8:04</span><span>●●●</span></div>
+              <div class="card success-card">
+                <div style="font-size: 3.4rem">✓</div>
+                <h2 class="title">Saved</h2>
+                <p class="subtitle">Feeding and medicine were logged for Emma at 8:00pm.</p>
+              </div>
+              <div class="button-row">
+                <span class="button secondary">Add another</span>
+                <span class="button">Back home</span>
+              </div>
+            </div>
+          </div>
+          <div class="caption">Save success state</div>
+        </div>
+      </section>
+
+      <section class="section-title">
+        <h2>Quick Add forms</h2>
+        <p>
+          Each form uses the same simple pattern: baby, type, amount or dose when needed, time,
+          notes, and save. Defaults do most of the work.
+        </p>
+      </section>
+      <section class="screens">
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen scroll">
+              <div class="status-bar"><span>8:05</span><span>●●●</span></div>
+              <h2 class="title">Quick Add</h2>
+              <p class="subtitle">Choose a log type. Each form stays short and prefilled.</p>
+              <div class="quick-grid">
+                <div class="quick"><span>🍼</span>Feeding</div>
+                <div class="quick"><span>🧷</span>Diaper</div>
+                <div class="quick"><span>🌙</span>Sleep</div>
+                <div class="quick"><span>💊</span>Medicine</div>
+                <div class="quick"><span>🌡️</span>Temp</div>
+                <div class="quick"><span>📝</span>Note</div>
+              </div>
+              <div class="card">
+                <h3>Feeding</h3>
+                <div class="field"><label>Baby</label><div class="fake-input">Emma ▾</div></div>
+                <div class="field"><label>Type</label><div class="fake-input">Formula ▾</div></div>
+                <div class="field"><label>Amount</label><div class="fake-input">90 ml</div></div>
+                <div class="field"><label>Time</label><div class="fake-input">Now</div></div>
+                <div class="field"><label>Notes</label><div class="fake-input">Optional</div></div>
+                <span class="button" style="margin-top: 12px">Save feeding</span>
+              </div>
+              <nav class="bottom-nav">
+                <div class="nav-item active"><b>⌂</b>Home</div>
+                <div class="nav-item"><b>◷</b>Timeline</div>
+                <div class="nav-item"><b>✚</b>Medicine</div>
+                <div class="nav-item"><b>▦</b>Supplies</div>
+                <div class="nav-item"><b>☑</b>Guide</div>
+              </nav>
+            </div>
+          </div>
+          <div class="caption">Quick Add entry point + feeding form</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen scroll">
+              <div class="status-bar"><span>8:06</span><span>●●●</span></div>
+              <h2 class="title">Log medicine</h2>
+              <p class="subtitle">Medicine always requires review before saving.</p>
+              <div class="card medicine-card">
+                <div class="field"><label>Baby</label><div class="fake-input">Emma ▾</div></div>
+                <div class="field"><label>Medicine</label><div class="fake-input">Fever medicine</div></div>
+                <div class="field"><label>Dose</label><div class="fake-input">2.5 ml</div></div>
+                <div class="field"><label>Time</label><div class="fake-input">8:00pm</div></div>
+                <div class="field"><label>Notes</label><div class="fake-input">Optional</div></div>
+                <div class="check-row">
+                  <span class="checkbox"></span>
+                  <p class="subtitle"><strong>I checked the medicine, dose, time, and child.</strong></p>
+                </div>
+              </div>
+              <div class="mini-note">
+                BabyCopilot tracks medicine but does not provide medical advice.
+              </div>
+              <span class="button warning">Save medicine</span>
+            </div>
+          </div>
+          <div class="caption">Medicine form with required confirmation</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen scroll">
+              <div class="status-bar"><span>8:07</span><span>●●●</span></div>
+              <h2 class="title">Other quick forms</h2>
+              <div class="card">
+                <h3>Diaper</h3>
+                <p class="subtitle">Baby · type wet/dirty/mixed/dry · time · notes · save.</p>
+              </div>
+              <div class="card">
+                <h3>Sleep</h3>
+                <p class="subtitle">Baby · nap/nighttime · start · end or still sleeping · notes · save.</p>
+              </div>
+              <div class="card">
+                <h3>Temperature</h3>
+                <p class="subtitle">Baby · temperature · F/C · method · time · notes · save.</p>
+              </div>
+              <div class="card">
+                <h3>Note</h3>
+                <p class="subtitle">Baby · note type · time · notes · save.</p>
+              </div>
+            </div>
+          </div>
+          <div class="caption">Diaper, sleep, temperature, note essentials</div>
+        </div>
+      </section>
+
+      <section class="section-title">
+        <h2>Dashboards and support screens</h2>
+        <p>
+          Timeline, Medicine, Supplies, Guide, and Family & Settings give parents deeper control
+          without crowding the Home screen.
+        </p>
+      </section>
+      <section class="screens">
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen scroll">
+              <div class="status-bar"><span>8:08</span><span>●●●</span></div>
+              <div class="between">
+                <h2 class="title">Today</h2>
+                <div class="selector"><span class="avatar">E</span> Emma ▾</div>
+              </div>
+              <div class="stats-grid">
+                <div class="stat"><small>Feeds</small><strong>4</strong></div>
+                <div class="stat"><small>Diapers</small><strong>6</strong></div>
+                <div class="stat"><small>Sleep</small><strong>2 naps</strong></div>
+                <div class="stat"><small>Medicine</small><strong>1 dose</strong></div>
+              </div>
+              <div class="chip-row">
+                <span class="chip active">All</span>
+                <span class="chip">Feeding</span>
+                <span class="chip">Diaper</span>
+                <span class="chip">Sleep</span>
+                <span class="chip">Medicine</span>
+                <span class="chip">Temp</span>
+                <span class="chip">Note</span>
+              </div>
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div class="time">8:00p</div>
+                  <div class="log"><strong>Formula 90ml</strong><span>Edit · Delete</span></div>
+                </div>
+                <div class="timeline-item">
+                  <div class="time">8:00p</div>
+                  <div class="log"><strong>Fever medicine 2.5ml</strong><span>Edit · Delete</span></div>
+                </div>
+                <div class="timeline-item">
+                  <div class="time">7:40p</div>
+                  <div class="log"><strong>Wet diaper</strong><span>Edit · Delete</span></div>
+                </div>
+                <div class="timeline-item">
+                  <div class="time">6:55p</div>
+                  <div class="log"><strong>Nap ended · 45m</strong><span>Edit · Delete</span></div>
+                </div>
+              </div>
+              <nav class="bottom-nav">
+                <div class="nav-item"><b>⌂</b>Home</div>
+                <div class="nav-item active"><b>◷</b>Timeline</div>
+                <div class="nav-item"><b>✚</b>Medicine</div>
+                <div class="nav-item"><b>▦</b>Supplies</div>
+                <div class="nav-item"><b>☑</b>Guide</div>
+              </nav>
+            </div>
+          </div>
+          <div class="caption">Timeline with filters, edit/delete, daily summary</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen scroll">
+              <div class="status-bar"><span>8:09</span><span>●●●</span></div>
+              <h2 class="title">Medicine</h2>
+              <p class="subtitle">Safety-first tracking for active medicines and reminders.</p>
+              <div class="card medicine-card">
+                <div class="between">
+                  <h3>Fever medicine</h3>
+                  <span class="chip active">Active</span>
+                </div>
+                <p class="subtitle">Last given: 8:00pm · Emma</p>
+                <p class="subtitle">Next reminder: 12:00am</p>
+                <span class="button warning" style="margin-top: 12px">Log dose</span>
+              </div>
+              <div class="card danger-card">
+                <h3>⚠ This dose may be too soon.</h3>
+                <p class="subtitle">Fever medicine was last logged for Emma at 8:00pm. Check the label or contact a clinician before giving more.</p>
+                <div class="button-row" style="margin-top: 12px">
+                  <span class="button secondary">Review</span>
+                  <span class="button warning">Save anyway</span>
+                </div>
+              </div>
+              <div class="card">
+                <h3>Add medicine manually</h3>
+                <p class="subtitle">Name, usual dose label, unit, optional reminder interval.</p>
+              </div>
+              <div class="mini-note">BabyCopilot tracks medicine but does not provide medical advice.</div>
+              <nav class="bottom-nav">
+                <div class="nav-item"><b>⌂</b>Home</div>
+                <div class="nav-item"><b>◷</b>Timeline</div>
+                <div class="nav-item active"><b>✚</b>Medicine</div>
+                <div class="nav-item"><b>▦</b>Supplies</div>
+                <div class="nav-item"><b>☑</b>Guide</div>
+              </nav>
+            </div>
+          </div>
+          <div class="caption">Medicine dashboard + too-soon warning</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen scroll">
+              <div class="status-bar"><span>8:10</span><span>●●●</span></div>
+              <h2 class="title">Supplies</h2>
+              <p class="subtitle">Track essentials and know when to reorder.</p>
+              <div class="card supply">
+                <div class="supply-icon">🧷</div>
+                <div><strong>Diapers</strong><p class="subtitle">42 left · about 6 days · reorder at 20</p><div class="progress"><span style="width: 58%"></span></div></div>
+              </div>
+              <div class="card supply">
+                <div class="supply-icon">🍼</div>
+                <div><strong>Formula</strong><p class="subtitle">1.5 cans · about 5 days · buy tomorrow</p><div class="progress"><span style="width: 42%"></span></div></div>
+              </div>
+              <div class="card supply">
+                <div class="supply-icon">🧻</div>
+                <div><strong>Wipes</strong><p class="subtitle">3 packs · about 18 days</p><div class="progress"><span style="width: 78%"></span></div></div>
+              </div>
+              <div class="button-row">
+                <span class="button secondary">Add item</span>
+                <span class="button">Log purchase</span>
+              </div>
+              <nav class="bottom-nav">
+                <div class="nav-item"><b>⌂</b>Home</div>
+                <div class="nav-item"><b>◷</b>Timeline</div>
+                <div class="nav-item"><b>✚</b>Medicine</div>
+                <div class="nav-item active"><b>▦</b>Supplies</div>
+                <div class="nav-item"><b>☑</b>Guide</div>
+              </nav>
+            </div>
+          </div>
+          <div class="caption">Supplies inventory dashboard</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen scroll">
+              <div class="status-bar"><span>8:11</span><span>●●●</span></div>
+              <h2 class="title">Guide</h2>
+              <p class="subtitle">Simple checklists by baby stage.</p>
+              <div class="chip-row">
+                <span class="chip active">Before delivery</span>
+                <span class="chip">0-3 months</span>
+                <span class="chip">3-6 months</span>
+                <span class="chip">6-12 months</span>
+              </div>
+              <div class="card">
+                <h3>Hospital bag</h3>
+                <div class="guide-list">
+                  <div class="guide-item"><span class="checkbox checked">✓</span><span>ID and insurance</span></div>
+                  <div class="guide-item"><span class="checkbox"></span><span>Going-home outfit</span></div>
+                  <div class="guide-item"><span class="checkbox"></span><span>Phone charger</span></div>
+                </div>
+              </div>
+              <div class="card">
+                <h3>Newborn essentials</h3>
+                <div class="guide-list">
+                  <div class="guide-item"><span class="checkbox"></span><span>Safe sleep space</span></div>
+                  <div class="guide-item"><span class="checkbox"></span><span>Feeding essentials</span></div>
+                  <div class="guide-item"><span class="checkbox"></span><span>Diapering essentials</span></div>
+                  <div class="guide-item"><span class="checkbox"></span><span>Medicine cabinet checklist</span></div>
+                </div>
+              </div>
+              <nav class="bottom-nav">
+                <div class="nav-item"><b>⌂</b>Home</div>
+                <div class="nav-item"><b>◷</b>Timeline</div>
+                <div class="nav-item"><b>✚</b>Medicine</div>
+                <div class="nav-item"><b>▦</b>Supplies</div>
+                <div class="nav-item active"><b>☑</b>Guide</div>
+              </nav>
+            </div>
+          </div>
+          <div class="caption">Guide by stage and checklist category</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen scroll">
+              <div class="status-bar"><span>8:12</span><span>●●●</span></div>
+              <h2 class="title">Family & Settings</h2>
+              <p class="subtitle">Manage caregivers, notifications, baby profiles, and data.</p>
+              <div class="card">
+                <h3>Caregivers</h3>
+                <div class="guide-list">
+                  <div class="guide-item"><span class="avatar">M</span><span><strong>Maya</strong><br><span class="subtitle">Parent</span></span></div>
+                  <div class="guide-item"><span class="avatar">T</span><span><strong>Taylor</strong><br><span class="subtitle">Grandparent</span></span></div>
+                </div>
+                <span class="button secondary" style="margin-top: 12px">Add caregiver</span>
+              </div>
+              <div class="card">
+                <h3>Notification settings</h3>
+                <p class="subtitle">Medicine, feeding, sleep, supplies, and quiet hours.</p>
+              </div>
+              <div class="card">
+                <h3>Baby profiles</h3>
+                <p class="subtitle">Edit Emma, add a child, update photos and preferences.</p>
+              </div>
+              <div class="card">
+                <h3>Privacy and data</h3>
+                <p class="subtitle">Data export, privacy policy, and delete account placeholders.</p>
+              </div>
+            </div>
+          </div>
+          <div class="caption">Family & Settings</div>
+        </div>
+      </section>
+
+      <section class="section-title">
+        <h2>States and design system</h2>
+        <p>
+          Empty, error, and confirmation states use clear next steps. The design system favors warm
+          colors, rounded cards, high contrast text, and touch targets sized for one-handed use.
+        </p>
+      </section>
+      <section class="screens">
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen centered">
+              <div class="status-bar"><span>8:13</span><span>●●●</span></div>
+              <div class="card assistant-card">
+                <div style="font-size: 3rem">🍼</div>
+                <h2 class="title">Start with one quick note.</h2>
+                <p class="subtitle">No logs yet for Emma today. Tell me what happened or use Quick Add.</p>
+              </div>
+              <span class="button">Tell me what happened</span>
+              <span class="button secondary">Try quick add</span>
+            </div>
+          </div>
+          <div class="caption">Empty state</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen centered">
+              <div class="status-bar"><span>8:14</span><span>●●●</span></div>
+              <div class="card danger-card">
+                <h2 class="title">I couldn't tell what to save.</h2>
+                <p class="subtitle">Try editing the text or choose a quick add form.</p>
+              </div>
+              <div class="button-row">
+                <span class="button secondary">Use quick add</span>
+                <span class="button">Edit text</span>
+              </div>
+              <div class="mini-note">If microphone access is off, typing remains available.</div>
+            </div>
+          </div>
+          <div class="caption">Error state</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen centered">
+              <div class="status-bar"><span>8:15</span><span>●●●</span></div>
+              <div class="card success-card">
+                <h2 class="title">Invite sent</h2>
+                <p class="subtitle">Taylor can join as a grandparent caregiver and help log care for Emma.</p>
+              </div>
+              <div class="button-row">
+                <span class="button secondary">Invite another</span>
+                <span class="button">Done</span>
+              </div>
+            </div>
+          </div>
+          <div class="caption">Confirmation state</div>
+        </div>
+      </section>
+
+      <section class="section-title">
+        <h2>High-fidelity direction</h2>
+        <p>
+          Use a soft pastel palette, large rounded controls, friendly typography, and direct safety copy.
+          Medicine warnings use amber or coral accents, an icon, and text so the state is not color-only.
+        </p>
+      </section>
+      <section class="swatches" aria-label="Color palette">
+        <div class="swatch"><div class="swatch-color" style="background: #fff8f0"></div><span>Cream background</span></div>
+        <div class="swatch"><div class="swatch-color" style="background: #ffe5d4"></div><span>Peach warmth</span></div>
+        <div class="swatch"><div class="swatch-color" style="background: #ddebdd"></div><span>Sage success</span></div>
+        <div class="swatch"><div class="swatch-color" style="background: #ddebff"></div><span>Sky assistant</span></div>
+        <div class="swatch"><div class="swatch-color" style="background: #f7d590"></div><span>Amber medicine</span></div>
+        <div class="swatch"><div class="swatch-color" style="background: #25313b"></div><span>Ink text</span></div>
+      </section>
+    </main>
+  </body>
+</html>

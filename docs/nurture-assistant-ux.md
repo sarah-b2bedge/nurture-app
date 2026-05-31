@@ -61,8 +61,14 @@ Account entry is shown before onboarding when needed. Family & Settings is avail
 ```mermaid
 flowchart TD
   A[Open app] --> AUTH{Signed in?}
-  AUTH -- No --> AUTH1[Sign up or login]
-  AUTH1 --> AUTH2[Email verification / password reset if needed]
+  AUTH -- No --> AUTH0[Choose log in or create account]
+  AUTH0 --> AUTH1[Create account]
+  AUTH0 --> AUTH3[Log in]
+  AUTH1 --> AUTH2[Email verification if needed]
+  AUTH3 --> AUTH5{Login successful?}
+  AUTH5 -- No --> AUTH4[Forgot password if needed]
+  AUTH4 --> AUTH3
+  AUTH5 -- Yes --> B
   AUTH2 --> B{Onboarded?}
   AUTH -- Yes --> B{Onboarded?}
   B -- No --> C[Welcome]
@@ -129,12 +135,30 @@ flowchart TD
 
 ## User management flow
 
-Account features should feel secure without making the parent do extra work in the middle of baby-care logging.
+Account features should be obvious, separate, and secure. A caregiver should never wonder whether they are creating a new account or signing into an existing one.
+
+### Account entry
+
+The first account screen presents two clear paths:
+- **Create account** for new parents or invited caregivers who do not have an account.
+- **Log in** for returning users.
+
+Do not show full sign-up and login forms on the same mobile screen. It increases cognitive load and makes error handling ambiguous.
+
+```
+┌──────────────────────────────┐
+│ Welcome back                 │
+│ Track care with your family. │
+│ [Create account]             │
+│ [Log in]                     │
+│ Accepting an invite?         │
+└──────────────────────────────┘
+```
 
 ### Sign up
 
 Entry points:
-- Welcome screen primary CTA for new users.
+- Account entry screen.
 - "Create account" link from login.
 - Invite acceptance flow for caregivers.
 
@@ -143,7 +167,6 @@ Essential fields:
 - Email
 - Password
 - Confirm password
-- Optional phone number for caregiver invites and reminders
 - Terms and privacy acknowledgement
 
 Recommended flow:
@@ -166,14 +189,14 @@ Behavior:
 - Use inline validation for weak passwords, invalid email, and mismatched confirmation.
 - Keep password requirements visible but concise.
 
-### Login
+### Log in
 
 Essential fields:
 - Email
 - Password
 
 Actions:
-- Login
+- Log in
 - Forgot password
 - Create account
 
@@ -184,16 +207,16 @@ Behavior:
 
 ### Profile
 
-Profile is available from Family & Settings.
+Profile is available from Family & Settings. Keep it limited to account identity and contact details.
 
 Fields:
 - Name
 - Email
-- Phone
+- Phone, optional
 - Profile photo/avatar
-- Household role
-- Time zone
-- Preferred units: ml/oz and F/C
+- Household role, read-only unless changed by a parent/admin
+
+Do not place care preferences such as ml/oz or F/C in the personal profile. Those belong in Baby profiles or care preferences because they affect logs and dashboards, not the user's identity.
 
 Actions:
 - Save changes
@@ -676,7 +699,7 @@ Sections:
   - Add/edit baby
   - Avatar/photo
   - Birth date
-  - Care preferences
+  - Care preferences, including default units for milk and temperature
 - Privacy and data
   - Data export placeholder
   - Delete account placeholder
@@ -1172,6 +1195,7 @@ Actions:
 - A medicine entry cannot be saved without confirming baby, medicine name, dose, and time.
 - The Home screen provides useful status at a glance without opening the timeline.
 - Empty states guide users toward the next useful action.
-- A new caregiver can sign up or log in, complete profile basics, and reach onboarding or Home without losing invite context.
-- A parent can update profile information and change password with clear validation and success states.
+- A new caregiver can choose a clear account path, sign up or log in, and reach onboarding or Home without losing invite context.
+- A parent can update identity/contact profile information and change password with clear validation and success states.
+- Care preferences such as ml/oz and F/C are managed with baby/care settings, not the personal profile.
 - A parent can compare plans, enter payment details, review recurring billing terms, and confirm subscription purchase.

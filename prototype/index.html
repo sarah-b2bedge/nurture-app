@@ -704,7 +704,7 @@
         </p>
       </section>
       <section class="flow-map" aria-label="User flow map">
-        <div class="flow-step">Account entry<small>Sign up, login, reset password, or accept invite.</small></div>
+        <div class="flow-step">Account entry<small>Create account, log in, reset password, or accept invite.</small></div>
         <div class="flow-step">Welcome<small>Create baby profile and invite caregivers.</small></div>
         <div class="flow-step">Permissions<small>Mic, camera, and notifications after value prompts.</small></div>
         <div class="flow-step">Home<small>Baby selector, assistant input, quick add, reminders.</small></div>
@@ -718,19 +718,37 @@
       <section class="section-title">
         <h2>User management</h2>
         <p>
-          Account flows are lightweight and secure: parents can sign up, log in, manage their profile,
-          change passwords, and reach billing without disrupting baby-care logging.
+          Account UX uses separate, obvious paths: choose create account or log in first, then complete
+          only the fields needed for that path. Profile stays focused on identity and contact details.
         </p>
       </section>
       <section class="screens">
         <div class="phone-wrap">
           <div class="phone">
-            <div class="screen scroll">
+            <div class="screen centered">
               <div class="status-bar"><span>7:58</span><span>●●●</span></div>
+              <div style="font-size: 3.4rem">🌙</div>
+              <h2 class="title">Welcome to Nurture Assistant</h2>
+              <p class="subtitle">Track baby care with your family in a few quick taps.</p>
+              <div class="card assistant-card" style="text-align: left">
+                <h3>Choose how to continue</h3>
+                <p class="subtitle">New parents create an account. Returning caregivers log in.</p>
+                <span class="button" style="margin-top: 14px">Create account</span>
+                <span class="button secondary" style="margin-top: 10px">Log in</span>
+              </div>
+              <div class="mini-note">Accepting an invite? Use the invite link so your role is applied automatically.</div>
+            </div>
+          </div>
+          <div class="caption">Account entry</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen scroll">
+              <div class="status-bar"><span>7:59</span><span>●●●</span></div>
               <h2 class="title">Create your account</h2>
-              <p class="subtitle">Start tracking care and invite your family when you're ready.</p>
+              <p class="subtitle">Set up your secure parent account, then add your baby profile.</p>
               <div class="card assistant-card">
-                <h3>Sign up</h3>
                 <div class="field"><label>Full name</label><div class="fake-input">Maya Chen</div></div>
                 <div class="field"><label>Email</label><div class="fake-input">maya@example.com</div></div>
                 <div class="field"><label>Password</label><div class="fake-input">••••••••••</div></div>
@@ -741,18 +759,28 @@
                 </div>
                 <span class="button" style="margin-top: 12px">Create account</span>
               </div>
-              <div class="card">
-                <h3>Login</h3>
-                <div class="field"><label>Email</label><div class="fake-input">maya@example.com</div></div>
-                <div class="field"><label>Password</label><div class="fake-input">••••••••••</div></div>
-                <div class="button-row" style="margin-top: 12px">
-                  <span class="button secondary">Forgot?</span>
-                  <span class="button">Log in</span>
-                </div>
-              </div>
+              <span class="button secondary">I already have an account</span>
             </div>
           </div>
-          <div class="caption">Sign up and login</div>
+          <div class="caption">Create account</div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="screen centered">
+              <div class="status-bar"><span>8:00</span><span>●●●</span></div>
+              <div class="card">
+                <h2 class="title">Log in</h2>
+                <p class="subtitle">Welcome back. Continue tracking care for your family.</p>
+                <div class="field"><label>Email</label><div class="fake-input">maya@example.com</div></div>
+                <div class="field"><label>Password</label><div class="fake-input">••••••••••</div></div>
+                <span class="button" style="margin-top: 12px">Log in</span>
+                <span class="button secondary" style="margin-top: 10px">Forgot password?</span>
+              </div>
+              <div class="mini-note">New to Nurture Assistant? Create an account first.</div>
+            </div>
+          </div>
+          <div class="caption">Log in</div>
         </div>
 
         <div class="phone-wrap">
@@ -763,23 +791,23 @@
                 <h2 class="title">Profile</h2>
                 <span class="avatar">M</span>
               </div>
-              <p class="subtitle">Manage your account details and care preferences.</p>
+              <p class="subtitle">Keep profile focused on who you are and how your care team can contact you.</p>
               <div class="card">
                 <div class="field"><label>Name</label><div class="fake-input">Maya Chen</div></div>
                 <div class="field"><label>Email</label><div class="fake-input">maya@example.com</div></div>
-                <div class="field"><label>Phone</label><div class="fake-input">(555) 010-2026</div></div>
+                <div class="field"><label>Phone optional</label><div class="fake-input">(555) 010-2026</div></div>
                 <div class="field"><label>Role</label><div class="fake-input">Parent</div></div>
-                <div class="field"><label>Units</label><div class="fake-input">ml and °F</div></div>
                 <span class="button" style="margin-top: 12px">Save profile</span>
               </div>
               <div class="card soft-card">
                 <h3>Account actions</h3>
                 <div class="guide-list">
                   <div class="guide-item"><span>🔒</span><strong>Change password</strong></div>
-                  <div class="guide-item"><span>💳</span><strong>Manage subscription and payment</strong></div>
+                  <div class="guide-item"><span>💳</span><strong>Subscription and payment</strong></div>
                   <div class="guide-item"><span>⬇</span><strong>Export data</strong></div>
                 </div>
               </div>
+              <div class="mini-note">Milk and temperature units belong in baby care preferences, not personal profile.</div>
             </div>
           </div>
           <div class="caption">Profile management</div>
@@ -791,18 +819,27 @@
               <div class="status-bar"><span>8:17</span><span>●●●</span></div>
               <div class="card">
                 <h2 class="title">Change password</h2>
-                <p class="subtitle">Use a password that is hard to guess and not used elsewhere.</p>
+                <p class="subtitle">Update your account password without changing baby-care settings.</p>
                 <div class="field"><label>Current password</label><div class="fake-input">••••••••••</div></div>
                 <div class="field"><label>New password</label><div class="fake-input">••••••••••••</div></div>
                 <div class="field"><label>Confirm new password</label><div class="fake-input">••••••••••••</div></div>
-                <div class="mini-note" style="margin-top: 12px">Use at least 8 characters. We'll keep you logged in after updating.</div>
+                <div class="mini-note" style="margin-top: 12px">Use at least 8 characters.</div>
                 <span class="button" style="margin-top: 12px">Update password</span>
               </div>
             </div>
           </div>
           <div class="caption">Change password</div>
         </div>
+      </section>
 
+      <section class="section-title">
+        <h2>Subscription and payment</h2>
+        <p>
+          Billing is separate from care logging. Parents can compare plans, review recurring terms,
+          and update payment without interrupting medicine or daily care workflows.
+        </p>
+      </section>
+      <section class="screens">
         <div class="phone-wrap">
           <div class="phone">
             <div class="screen scroll">
